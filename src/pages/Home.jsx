@@ -8,6 +8,23 @@ const [nome, setNome] = useState();
 const [email, setEmail] = useState();
 
 
+async function enviarUsuario() {
+
+const form = new FormData();
+form.append("nome", nome);
+form.append("email", email);
+
+const response = await fetch("http://localhost:3000/usuarios", {
+    method: "POST",
+    mode: "cors",
+    body: form,
+});
+
+
+
+}
+
+
 
     return (
         // 2. Um container para centralizar o formulário na página
