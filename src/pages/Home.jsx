@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import './Home.css'; 
+import axios from "axios"
 
 function Home() {
 
@@ -8,22 +9,20 @@ const [nome, setNome] = useState();
 const [email, setEmail] = useState();
 
 
-async function enviarUsuario() {
-
-const form = new FormData();
-form.append("nome", nome);
-form.append("email", email);
-
-const response = await fetch("http://localhost:3000/usuarios", {
-    method: "POST",
-    mode: "cors",
-    body: form,
-});
-
-
-
-}
-
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:3333/inserir-usuario',{
+      nome,
+      email
+    });
+    console.log('Dados enviados com sucesso:', response.data);
+    // Adicione lógica de sucesso aqui (ex: limpar o formulário, mostrar mensagem)
+  } catch (error) {
+    console.error('Erro ao enviar dados do formulário:', error);
+    // Adicione lógica de erro aqui (ex: mostrar mensagem de erro ao usuário)
+  }
+};
 
 
     return (
@@ -53,7 +52,7 @@ const response = await fetch("http://localhost:3000/usuarios", {
                         onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <button type="submit">Login</button>
+                <button onClick={handleSubmit} type="submit">Login</button>
             </form>
         </div>
     );
